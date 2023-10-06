@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   StyleSheet,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import { Button } from 'react-native';
 // import DarkModeSwitch from '../features/DarkMode/DarkModeSwitch';
@@ -27,13 +28,20 @@ function HomeScreen() {
     setInput('');
   };
 
-  // const deleteTask = () => {
-  //   setTasks();
-  // };
+  const deleteTask = () => {
+    setTasks((item) => item.find((y) => y.id));
+  };
 
-  const Item = ({ title }) => (
+  const Item = ({ id, title }) => (
     <View style={styles.item}>
       <Text style={styles.title}>{title}</Text>
+      <TouchableOpacity
+        style={styles.buttonDelete}
+        key={id}
+        onPress={deleteTask}
+      >
+        <Text style={styles.buttonText}>-</Text>
+      </TouchableOpacity>
     </View>
   );
 
@@ -69,6 +77,10 @@ const styles = StyleSheet.create({
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
+    flex: 1,
+    flexDirection: 'row', // Arrange items horizontally
+    justifyContent: 'space-between', // Put space between items
+    alignItems: 'center', // Center items vertically
   },
   title: {
     fontSize: 22,
@@ -83,6 +95,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
     padding: 10,
+  },
+  buttonDelete: {
+    backgroundColor: '#f9c2ff', // Background color for the button
+    paddingHorizontal: 2, // Increase the width of the button
+    borderRadius: 10, // Add some border radius for rounded corners
+  },
+  buttonText: {
+    color: 'red', // Text color for the button
+    fontSize: 38,
+    fontWeight: 'bold',
   },
 });
 
