@@ -3,7 +3,7 @@ import {
   View,
   Text,
   FlatList,
-  TouchableOpacity,
+  TouchableHighlight,
   StyleSheet,
   TextInput,
 } from 'react-native';
@@ -51,6 +51,11 @@ function HomeScreen() {
         defaultValue={input}
       />
       <Button title="Add Task" onPress={() => addTask()} />
+      <TouchableHighlight onPress={() => addTask()}>
+        <View style={styles.button}>
+          <Text>Add Task</Text>
+        </View>
+      </TouchableHighlight>
     </View>
   );
 }
@@ -72,6 +77,11 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 12,
     borderWidth: 1,
+    padding: 10,
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
     padding: 10,
   },
 });
