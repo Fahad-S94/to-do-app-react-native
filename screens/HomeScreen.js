@@ -18,11 +18,14 @@ function HomeScreen() {
   ]);
   const [input, setInput] = useState('');
 
-  // const addTask = () => {
-  //     const newTasks = []
-  //     setTasks();
-  //   }
-  // };
+  const addTask = () => {
+    const newTask = {
+      id: tasks.length + 1,
+      title: input,
+    };
+    setTasks((tasks) => [...tasks, newTask]);
+    setInput('');
+  };
 
   // const deleteTask = () => {
   //   setTasks();
@@ -42,11 +45,12 @@ function HomeScreen() {
         keyExtractor={(item) => item.id}
       />
       <TextInput
-        style={{ height: 40 }}
+        style={styles.input}
         placeholder="Type new task here!"
         onChangeText={(newText) => setInput(newText)}
         defaultValue={input}
       />
+      <Button title="Add Task" onPress={() => addTask()} />
     </View>
   );
 }
@@ -63,6 +67,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
   },
 });
 
