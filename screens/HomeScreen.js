@@ -16,6 +16,7 @@ function HomeScreen() {
     { id: '2', title: 'Walk the dog' },
     { id: '3', title: 'Finish homework' },
   ]);
+  const [input, setInput] = useState('');
 
   // const addTask = () => {
   //     const newTasks = []
@@ -39,6 +40,12 @@ function HomeScreen() {
         data={tasks}
         renderItem={({ item }) => <Item title={item.title} />}
         keyExtractor={(item) => item.id}
+      />
+      <TextInput
+        style={{ height: 40 }}
+        placeholder="Type new task here!"
+        onChangeText={(newText) => setInput(newText)}
+        defaultValue={input}
       />
     </View>
   );
