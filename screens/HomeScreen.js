@@ -17,9 +17,46 @@ function HomeScreen() {
     { id: '3', title: 'Finish homework' },
   ]);
 
-  return <View></View>;
+  // const addTask = () => {
+  //     const newTasks = []
+  //     setTasks();
+  //   }
+  // };
+
+  // const deleteTask = () => {
+  //   setTasks();
+  // };
+
+  const Item = ({ title }) => (
+    <View style={styles.item}>
+      <Text style={styles.title}>{title}</Text>
+    </View>
+  );
+
+  return (
+    <View>
+      <FlatList
+        data={tasks}
+        renderItem={({ item }) => <Item title={item.title} />}
+        keyExtractor={(item) => item.id}
+      />
+    </View>
+  );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 22,
+  },
+});
 
 export default HomeScreen;
