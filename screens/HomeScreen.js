@@ -1,15 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   FlatList,
-  TouchableHighlight,
   StyleSheet,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import { Button } from 'react-native';
-// import DarkModeSwitch from '../features/DarkMode/DarkModeSwitch';
 
 function HomeScreen() {
   const [tasks, setTasks] = useState([
@@ -28,17 +25,16 @@ function HomeScreen() {
     setInput('');
   };
 
-  const deleteTask = () => {
-    setTasks((item) => item.find((y) => y.id));
+  const deleteTask = (id) => {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
   };
 
-  const Item = ({ id, title }) => (
+  const renderItem = ({ item }) => (
     <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title}>{item.title}</Text>
       <TouchableOpacity
         style={styles.buttonDelete}
-        key={id}
-        onPress={deleteTask}
+        onPress={() => deleteTask(item.id)}
       >
         <Text style={styles.buttonText}>-</Text>
       </TouchableOpacity>
@@ -46,24 +42,23 @@ function HomeScreen() {
   );
 
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList
         data={tasks}
-        renderItem={({ item }) => <Item title={item.title} />}
+        renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Type new task here!"
-        onChangeText={(newText) => setInput(newText)}
-        defaultValue={input}
-      />
-      <Button title="Add Task" onPress={() => addTask()} />
-      <TouchableHighlight onPress={() => addTask()}>
-        <View style={styles.button}>
-          <Text>Add Task</Text>
-        </View>
-      </TouchableHighlight>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Type new task here!"
+          onChangeText={(newText) => setInput(newText)}
+          defaultValue={input}
+        />
+        <TouchableOpacity onPress={() => addTask()} style={styles.addButton}>
+          <Text style={{ color: 'white' }}>Add Task</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -72,37 +67,46 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  inputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+  },
   item: {
     backgroundColor: '#f9c2ff',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
     flex: 1,
-    flexDirection: 'row', // Arrange items horizontally
-    justifyContent: 'space-between', // Put space between items
-    alignItems: 'center', // Center items vertically
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   title: {
     fontSize: 22,
   },
   input: {
     height: 40,
-    margin: 12,
+    flex: 1,
     borderWidth: 1,
     padding: 10,
   },
-  button: {
+  addButton: {
+    marginLeft: 8,
+    backgroundColor: 'blue',
     alignItems: 'center',
-    backgroundColor: '#DDDDDD',
     padding: 10,
+    borderRadius: 5,
   },
   buttonDelete: {
-    backgroundColor: '#f9c2ff', // Background color for the button
-    paddingHorizontal: 2, // Increase the width of the button
-    borderRadius: 10, // Add some border radius for rounded corners
+    backgroundColor: '#f9c2ff',
+    paddingHorizontal: 2,
+    borderRadius: 10,
   },
   buttonText: {
-    color: 'red', // Text color for the button
+    color: 'red',
     fontSize: 38,
     fontWeight: 'bold',
   },
